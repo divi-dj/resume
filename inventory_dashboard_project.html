@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Inventory Dashboard - UI/UX Concept by Divya Joshi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- New Fonts: Poppins for Headlines/Data, Inter for Body -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Inter:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Based on the Progress Dashboard Example */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #A0C4FF;
+            /* Light blue background */
+        }
+
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 200px;
+            /* Slightly reduced height for better card fit */
+            width: 100%;
+        }
+
+        .main-container {
+            background-color: #F8F9FA;
+            /* Off-white main canvas */
+            min-height: 100vh;
+        }
+
+        .sidebar-item:hover {
+            background-color: #E9ECEF;
+            border-radius: 0.5rem;
+        }
+
+        .active-item {
+            background-color: #E9ECEF;
+            border-radius: 0.5rem;
+            border-left: 4px solid #4F46E5;
+            padding-left: 1rem !important;
+        }
+    </style>
+</head>
+
+<body class="p-0">
+
+    <div class="flex">
+
+        <!-- CONCEPTUAL SIDEBAR (Navigation/User Context) -->
+        <aside class="w-64 bg-white p-6 shadow-xl hidden md:block">
+            <div class="text-center mb-10">
+                <div
+                    class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-2 flex items-center justify-center text-xl font-bold text-gray-500">
+                    DJ
+                </div>
+                <h2 class="text-lg font-poppins font-semibold">Inventory Manager</h2>
+                <p class="text-xs text-gray-500">divyatheLearner@company.com</p>
+            </div>
+
+            <!-- Navigation Links (Mimicking the Example) -->
+            <nav class="space-y-1 text-sm font-medium">
+                <a href="#" class="flex items-center p-3 text-indigo-700 active-item">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 8v8m-4-8v8m-4-8v8M4 16h16M4 8h16"></path>
+                    </svg>
+                    DASHBOARD
+                </a>
+                <a href="#" class="flex items-center p-3 text-gray-700 sidebar-item">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4m-4-6l-6 6"></path>
+                    </svg>
+                    REPORTS
+                </a>
+                <a href="#" class="flex items-center p-3 text-gray-700 sidebar-item">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c1.657 0 3 .895 3 2s-1.343 2-3 2-3-.895-3-2 1.343-2 3-2zM9 16c0 1.657 1.343 3 3 3s3-1.343 3-3h-6zM4 12a8 8 0 1116 0 8 8 0 01-16 0z">
+                        </path>
+                    </svg>
+                    PRODUCT CATALOG
+                </a>
+                <a href="#" class="flex items-center p-3 text-gray-700 sidebar-item">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    STOCK ADJUSTMENTS
+                </a>
+            </nav>
+
+            <div class="mt-20">
+                <button
+                    class="w-full py-2 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-150">
+                    LOG OUT
+                </button>
+            </div>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div class="flex-1 p-6 main-container">
+
+            <!-- Top Bar -->
+            <header class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-poppins font-extrabold text-gray-800">INVENTORY PERFORMANCE</h1>
+                <button
+                    class="bg-purple-200 text-purple-700 font-semibold px-4 py-2 rounded-lg hover:bg-purple-300 transition duration-150 text-sm">
+                    CONTACT SUPPORT
+                </button>
+            </header>
+
+            <!-- Dashboard Grid: 2x2 Structure -->
+            <main class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- --- BOX 1 (Top-Left): Primary Trend Chart (Line Chart) --- -->
+                <div class="bg-white p-5 rounded-xl shadow-md space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-800 font-poppins mb-2">Stock Value Trend (Last 6 Months)
+                    </h3>
+                    <p class="text-xs text-gray-500">Visualizing the seasonal fluctuation of inventory value vs. sales.
+                    </p>
+                    <div class="chart-container">
+                        <canvas id="stockTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- --- BOX 2 (Top-Right): Status Breakdown & Main KPI --- -->
+                <div class="bg-white p-5 rounded-xl shadow-md space-y-4 flex flex-col">
+                    <h3 class="text-xl font-semibold text-gray-800 font-poppins mb-2">Stock Status Breakdown</h3>
+
+                    <div class="flex flex-row items-center justify-between flex-grow">
+
+                        <!-- KPI combined with Donut Chart -->
+                        <div class="flex-shrink-0 pt-4 pb-4 w-1/2">
+                            <p class="text-sm font-poppins text-gray-500 text-center">Total SKU Value</p>
+                            <p class="text-3xl font-extrabold text-indigo-700 font-poppins text-center mb-4">₹ 2.45 Cr
+                            </p>
+                            <p class="text-xs text-green-600 font-semibold text-center mt-[-10px]">▲ 4.2% YTD</p>
+                        </div>
+
+                        <!-- Donut Chart -->
+                        <div class="h-40 w-40 mx-auto w-1/2">
+                            <canvas id="statusDonutChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-2 w-full text-center text-xs font-semibold pt-4 border-t">
+                        <span class="text-emerald-600">Healthy</span>
+                        <span class="text-amber-600">Low</span>
+                        <span class="text-red-600">Slow Moving</span>
+                    </div>
+                </div>
+
+                <!-- --- BOX 3 (Bottom-Left): Performance Metrics (Bar Chart & Mini-KPIs) --- -->
+                <div class="bg-white p-5 rounded-xl shadow-md space-y-4">
+                    <h3 class="text-xl font-semibold text-gray-800 font-poppins mb-2">Demand by Region (Top 5 States)
+                    </h3>
+
+                    <!-- Mini KPI Tiles -->
+                    <div class="grid grid-cols-2 gap-3 text-sm font-poppins">
+                        <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-emerald-500">
+                            <p class="text-gray-500">Avg. Sell-Through</p>
+                            <p class="text-xl font-bold text-emerald-600">78\%</p>
+                        </div>
+                        <div class="bg-gray-50 p-3 rounded-lg border-l-4 border-red-500">
+                            <p class="text-gray-500">At-Risk Stock</p>
+                            <p class="text-xl font-bold text-red-600">1,250</p>
+                        </div>
+                    </div>
+
+                    <!-- Bar Chart -->
+                    <div class="chart-container">
+                        <canvas id="regionalDemandChart"></canvas>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">Identifies key geographic markets driving product consumption.
+                    </p>
+                </div>
+
+                <!-- --- BOX 4 (Bottom-Right): Alerts and Tool Stack --- -->
+                <div class="space-y-6">
+                    <!-- 4. Quick Action Alerts Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md border-l-4 border-yellow-500">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3 font-poppins">Priority Alerts</h3>
+                        <ul class="space-y-3 text-sm text-gray-700">
+                            <li class="flex items-start">
+                                <span class="text-yellow-500 mr-2">⚠️</span>
+                                <div>Low Stock (SKU -405) Reorder point hit. Demand up 20\%.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-red-500 mr-2">🚨</span>
+                                <div>Slow Moving (SKU -112) 45 days in stock. Recommend markdown.</div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-500 mr-2">ℹ️</span>
+                                <div>Q3 Forecast Projected stockout risk in Chennai (Electronics).</div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 5. Tool Stack Callout Card -->
+                    <div class="bg-indigo-50 p-5 rounded-xl shadow-md">
+                        <h3 class="text-xl font-semibold text-indigo-700 mb-2 font-poppins">Design \& Feasibility Stack
+                        </h3>
+                        <p class="text-sm text-indigo-600">
+                            Design was conceptualized in Figma/Canva emphasizing clarity, minimal navigation, and
+                            responsive card design. Data structure knowledge (from SQL \& Excel) informed the
+                            visualization choices.
+                        </p>
+                    </div>
+                </div>
+            </main>
+
+        </div>
+    </div>
+
+    <!-- Chart.js Implementation -->
+    <script>
+        // Mock data based on analytical goals
+        const mockData = {
+            months: ['Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            stockValue: [1.8, 2.0, 2.3, 2.5, 2.4, 2.6], // in Crores
+            salesValue: [1.5, 1.7, 1.9, 2.1, 2.0, 2.2], // in Crores
+            regions: ['Maharashtra', 'Tamil Nadu', 'Karnataka', 'Delhi', 'Gujarat'],
+            regionalSales: [450, 320, 280, 210, 150], // in Lakhs
+            stockStatus: [60, 25, 15] // Healthy, Low, Slow Moving (%)
+        };
+
+        // Global Chart Defaults for Font
+        Chart.defaults.font.family = 'Poppins, sans-serif';
+
+        // Destroy helper
+        let chartInstances = {};
+        function destroyChart(id) {
+            if (chartInstances[id]) {
+                chartInstances[id].destroy();
+                delete chartInstances[id];
+            }
+        }
+
+        function renderStockTrendChart() {
+            destroyChart('stockTrendChart');
+            const ctx = document.getElementById('stockTrendChart').getContext('2d');
+            chartInstances['stockTrendChart'] = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: mockData.months,
+                    datasets: [
+                        {
+                            label: 'Inventory Value (Cr)',
+                            data: mockData.stockValue,
+                            borderColor: '#4F46E5', // Indigo
+                            backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                            tension: 0.3,
+                            fill: true,
+                            pointRadius: 5
+                        },
+                        {
+                            label: 'Sales Velocity (Cr)',
+                            data: mockData.salesValue,
+                            borderColor: '#10B981', // Emerald
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.3,
+                            fill: true,
+                            pointRadius: 5
+                        }
+                    ],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: false, title: { display: true, text: 'Value (Cr)' } },
+                        x: { title: { display: true, text: 'Month' } }
+                    },
+                    plugins: { legend: { position: 'top' } }
+                }
+            });
+        }
+
+        function renderRegionalDemandChart() {
+            destroyChart('regionalDemandChart');
+            const ctx = document.getElementById('regionalDemandChart').getContext('2d');
+            chartInstances['regionalDemandChart'] = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: mockData.regions,
+                    datasets: [{
+                        label: 'Sales (in Lakhs)',
+                        data: mockData.regionalSales,
+                        backgroundColor: '#F59E0B', // Amber
+                        borderRadius: 5,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true, title: { display: true, text: 'Sales (Lakhs)' } },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function renderStatusDonutChart() {
+            destroyChart('statusDonutChart');
+            const ctx = document.getElementById('statusDonutChart').getContext('2d');
+            chartInstances['statusDonutChart'] = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Healthy', 'Low Stock', 'Slow Moving'],
+                    datasets: [{
+                        data: mockData.stockStatus,
+                        backgroundColor: ['#10B981', '#F59E0B', '#EF4444'], // Emerald, Amber, Red
+                        hoverOffset: 8,
+                        borderWidth: 0,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '80%',
+                    plugins: {
+                        legend: { display: false }, // Legend is handled by text below the box
+                        tooltip: {
+                            callbacks: {
+                                label: (context) => {
+                                    let label = context.label || '';
+                                    if (label) { label += ': '; }
+                                    if (context.parsed !== null) { label += context.parsed + '%'; }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderStockTrendChart();
+            renderRegionalDemandChart();
+            renderStatusDonutChart();
+        });
+    </script>
+</body>
+
+</html>
