@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DIVYA JOSHI | UI/UX Internship Portfolio</title>
+    <title>DIVYA JOSHI | UI/UX Design Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #4F46E5;
-
+            /* Indigo-600 */
             --secondary-color: #10B981;
-
+            /* Emerald-600 */
             --bg-light: #F9FAFB;
         }
 
@@ -21,22 +24,43 @@
             background-color: var(--bg-light);
         }
 
+        .cv-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
+        }
+
         .header-bg {
             background-color: var(--primary-color);
             background-image: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%);
-            box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
         }
 
         .section-title {
             color: var(--primary-color);
-            border-bottom: 3px solid #E0E7FF;
-            /* Indigo-100 */
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        /* Two-Column Structure (Responsive) */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            /* Default: Single column for mobile */
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        @media (min-width: 900px) {
+            .main-content {
+                grid-template-columns: 2.5fr 1.5fr;
+                /* Desktop: Primary (60%) and Sidebar (40%) */
+            }
         }
 
         /* Interactive Card Effect */
         .interactive-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-left: 4px solid transparent;
+            border-left: 6px solid transparent;
         }
 
         .interactive-card:hover {
@@ -44,10 +68,9 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             border-left-color: var(--primary-color);
             background-color: #F3F4F6;
-            /* Gray-100 */
         }
 
-        /* Skill Chip Hover */
+        /* Skill Chip Style */
         .skill-chip {
             background-color: #E0F2F1;
             color: #047857;
@@ -59,257 +82,377 @@
             background-color: #047857;
             color: white;
             transform: scale(1.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Custom Source Code Button */
+        .code-btn-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .code-hover-box {
+            position: absolute;
+            top: 100%;
+            /* Position below the button */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            background-color: #3730A3;
+            /* Dark Indigo */
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 10;
+            /* Triangle/Tooltip effect */
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .code-btn-container:hover .code-hover-box {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Visual Showcase Grid for Project 1 */
+        .visual-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .visual-item {
+            position: relative;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            border: 2px solid #E0E7FF;
+        }
+
+        .visual-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .visual-item:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        .visual-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(79, 70, 229, 0.8);
+            /* Indigo overlay */
+            color: white;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 2px 0;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .visual-item:hover .visual-label {
+            opacity: 1;
         }
     </style>
 </head>
 
-<body class="mx-auto max-w-4xl shadow-xl">
+<body class="p-0">
 
-    <!-- 1. HEADER & CONTACT BLOCK -->
-    <header class="header-bg p-8 text-white rounded-t-xl">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
-            <div>
-                <h1 class="text-4xl font-extrabold tracking-tight mb-1">DIVYA JOSHI</h1>
-                <p class="text-xl font-medium opacity-90 mb-4">ASPIRING UI/UX DESIGNER (INTERN)</p>
-            </div>
+    <div class="cv-container">
 
-
-            <div class="space-y-1 text-right text-sm opacity-90 md:mt-0 mt-4">
-                <p>9104739224</p>
-                <p><a href="mailto:divyajoshi88dj@gmail.com" class="hover:underline">divyajoshi88dj@gmail.com</a></p>
-              <!-- <p class="text-xs italic font-medium"><a href="https://divi-dj.github.io/resume"
-                class="hover:underline text-green-300 font-bold ">VIEW CONCEPTUAL PORTFOLIO BELOW</a></p>--> 
-                <p><a href="www.linkedin.com/in/divyajoshi-thelearner" class="hover:underline font-bold">LinkedIn
-                        Profile
-                    </a></p>
-                <p><a href="https://github.com/divi-dj" class="hover:underline">GitHub/Web Projects</a></p>
-                <p>Dadra Nagar \& Haveli - 396230</p>
-            </div>
-        </div>
-    </header>
-
-    <main class="bg-white p-8 space-y-8 rounded-b-xl">
-
-        <!-- 2. PORTFOLIO SUMMARY -->
-        <section class="mb-6">
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Profile & Internship Goal</h2>
-            <p class="text-gray-700 leading-relaxed italic">
-                "Seeking a UI/UX Design Internship to apply foundational visual, analytical, and front-end skills in
-                a practical product environment. I am a dedicated BCA graduate with a strong passion for transforming
-                initial concepts into engaging user interfaces. While new to formal UX projects, I offer proven
-                abilities in visual hierarchy (from Graphic Design), technical feasibility (HTML/CSS), and data
-                structure (SQL/Excel), making me a highly motivated and adaptable candidate."
-            </p>
-        </section>
-
-        <!-- 3. KEY FOUNDATIONAL DESIGN SKILLS -->
-        <section class="mb-6">
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Foundational Design & Technical Skills</h2>
-
-            <!-- Design Tools -->
-            <div class="mb-4">
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">UI/UX, Visual Design & Prototyping</h3>
-                <div class="flex flex-wrap gap-2">
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Figma (Actively Learning UX
-                        Flows)</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Adobe Photoshop</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Canva (Digital Asset
-                        Creation)</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Graphic Design
-                        Principles</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Wireframing & Mockups
-                        (Conceptual)</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Video Editing & Motion
-                        Graphics</span>
+        <header class="header-bg p-8 text-white rounded-t-xl">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div>
+                    <h1 class="text-4xl font-extrabold tracking-tight mb-1">DIVYA JOSHI</h1>
+                    <p class="text-xl font-medium opacity-90 mb-4">ASPIRING UI/UX DESIGNER (INTERN)</p>
                 </div>
-            </div>
 
-            <!-- Development & Data Skills (Feasibility) -->
-            <div class="mb-4">
-                <h3 class="text-lg font-semibold text-gray-800 mb-2">Technical Feasibility (Front-End & Data)</h3>
-                <div class="flex flex-wrap gap-2">
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">HTML & CSS (Web
-                        Creation)</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">SQL & RDBMS (Data
-                        Structure)</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Microsoft Excel (Advanced
-                        Analysis)/SAP</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Power BI / Data
-                        Analysis</span>
-                    <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Python / PHP</span>
-                </div>
-            </div>
-        </section>
+                <div class="flex space-x-4 md:space-x-6 text-xl md:text-2xl opacity-90 md:mt-0 mt-4 self-end">
 
-        <!-- 4. CONCEPTUAL PORTFOLIO PROJECTS (THIS IS YOUR LIVE PORTFOLIO) -->
-        <section class="mb-6">
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Conceptual Design Projects (Portfolio Showcase)</h2>
-
-            <!-- Conceptual Project 1: icecream website -->
-            <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="text-xl font-bold text-indigo-700">1. ice cream parlour website (Live
-                        Project)</h3>
-
-                    <a href="file:///C:/xampp/htdocs/ice-cream-website/index.html"
-                        class="text-sm font-semibold text-white bg-secondary-color px-3 py-1 rounded hover:bg-emerald-700">
-                        View Live Prototype
+                    <a href="tel:9104739224" title="Call Me: 9104739224"
+                        class="hover:text-yellow-300 transition duration-150">
+                        <i class="fas fa-phone"></i>
                     </a>
-                </div>
-                <p class="text-md font-medium text-gray-700">Focus: UI/UX Design, Order Flow Optimization, Responsive Design, Admin Dashboard (PHP & MySQL)</p>
-                <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600">
-                    <li>Problem: Local ice cream shops lacked a clean, modern interface for browsing flavors and tracking orders.
-                    </li>
-                    <li>Solution:Built a visually engaging website with login, order management, reviews, and a full admin panel powered by PHP & MySQL.</li>
-                    <li>Skills Showcased:User-centered design,MySQL database design, customer authentication, admin dashboard, reviews management, and overall full-stack development.</li>
-                </ul>
-            </div>
 
-            <!-- Conceptual Project 2: Data Dashboard -->
-            <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
-                <div class="flex justify-between items-center mb-1">
-                    <h3 class="text-xl font-bold text-indigo-700">2. E-Commerce Inventory Performance Dashboard (Live
-                        Project)</h3>
-
-                    <a href="https="inventory.html"
-                        class="text-sm font-semibold text-white bg-secondary-color px-3 py-1 rounded hover:bg-emerald-700">
-                        View Live Prototype
+                    <a href="mailto:divyajoshi88dj@gmail.com" title="Email: divyajoshi88dj@gmail.com"
+                        class="hover:text-yellow-300 transition duration-150">
+                        <i class="fas fa-envelope"></i>
                     </a>
+
+                    <a href="https://www.linkedin.com/in/divyajoshi-thelearner/" target="_blank"
+                        title="LinkedIn Profile" class="hover:text-yellow-300 transition duration-150">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+
+                    <a href="https://github.com/divi-dj" target="_blank" title="GitHub/Web Projects"
+                        class="hover:text-yellow-300 transition duration-150">
+                        <i class="fab fa-github"></i>
+                    </a>
+
+                    <span title="Address: Dadra Nagar & Haveli - 396230" class="cursor-default">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </span>
                 </div>
-                <p class="text-md font-medium text-gray-700">Focus: Data Visualization, Analytical UI, Information
-                    Design (Tying into Power BI skill)</p>
-                <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600">
-                    <li>Problem: Inventory managers need a single, easily digestible view of stock health and
-                        sales trends.</li>
-                    <li>Solution: Designed a dashboard UI prioritizing widget placement and data
-                        segmentation to convert complex analytics (Power BI knowledge) into usable visual UI.</li>
-                    <li>Skills Showcased: Data visualization via Chart.js, strict grid layout, and utilization
-                        of analytical background to define user needs.</li>
-                </ul>
+
+
+                <!-- This code snippet uses:
+                * **Icons:** Scalable Vector Graphics (SVG) delivered by Font Awesome (`<i
+                    class="fab fa-linkedin"></i>`, etc.).
+                * **Responsiveness:** Icons are larger on desktop (`md:text-2xl`) and scale down slightly on mobile
+                (`text-xl`).
+                * **Accessibility:** Includes `title` attributes so users know what the icons link to.-->
             </div>
-        </section>
+        </header>
 
+        <main class="bg-white main-content rounded-b-xl">
 
-        <!-- 5. PRIOR EXPERIENCE & GRAPHIC DESIGN HISTORY -->
-        <section class="mb-6">
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Prior Experience & Graphic Design History</h2>
+            <div class="space-y-8">
 
-            <!-- Project 1: Website Creation  -->
-            <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
-                <div class="flex justify-between items-start mb-1">
-                    <h3 class="text-xl font-bold text-indigo-700">Web Design Project (Self-Initiated)</h3>
-                    <span class="text-sm font-semibold text-gray-600">Personal Project</span>
-                </div>
-                <p class="text-md font-medium text-gray-700">Role: Designer \& Front-End Developer</p>
-                <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600">
-                    <li>Developed fully functional websites using HTML, CSS, and basic JavaScript.</li>
-                    <li>Applied graphic design principles to ensure aesthetic consistency and visual hierarchy.</li>
-                    <li>Gained experience in translating visual concepts into live, coded interfaces, understanding
-                        front-end constraints.</li>
-                </ul>
-            </div>
+                <section>
+                    <h2 class="text-2xl font-bold section-title">Profile & Internship Goal</h2>
+                    <p
+                        class="text-gray-700 leading-relaxed italic border-l-4 border-indigo-300 pl-3 bg-gray-50 p-3 rounded-md text-base">
+                        Seeking a UI/UX Design Internship to apply foundational visual, analytical, and front-end
+                        skills in
+                        a practical product environment. I am a dedicated BCA graduate with a strong passion for
+                        transforming
+                        initial concepts into engaging user interfaces. While new to formal UX projects, I offer proven
+                        abilities in visual hierarchy (from Graphic Design), technical feasibility (HTML/CSS), and data
+                        structure (SQL/Excel), making me a highly motivated and adaptable candidate.
+                    </p>
+                </section>
 
-            <!-- Certification Project (Use course as a project) -->
-            <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
-                <div class="flex justify-between items-start mb-1">
-                    <h3 class="text-xl font-bold text-indigo-700">Graphic Design Portfolio Development</h3>
-                    <span class="text-sm font-semibold text-gray-600">2023 - 2024</span>
-                </div>
-                <p class="text-md font-medium text-gray-700">Course: Graphic Designing (Skill India)</p>
-                <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600">
-                    <li>Completed comprehensive training in visual composition, typography, and color theory,
-                        directly supporting UI aesthetics.</li>
-                    <li>Used Adobe Photoshop and Canva to create marketing materials, logos, and digital assets,
-                        building a base in visual execution.</li>
-                    <li>Gained experience in delivering high-quality visual assets, demonstrating strong attention to
-                        pixel-level detail.</li>
-                </ul>
-            </div>
+                <section>
+                    <h2 class="text-2xl font-bold section-title">Conceptual Design Projects (Portfolio Showcase)</h2>
 
-            <!-- Data Entry Trainee  -->
-            <div class="interactive-card bg-white p-4 rounded-lg shadow-md">
-                <div class="flex justify-between items-start mb-1">
-                    <h3 class="text-xl font-bold text-indigo-700">Data Entry Trainee (Process Focus)</h3>
-                    <span class="text-sm font-semibold text-gray-600">Cortland (Current)</span>
-                </div>
-                <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600">
-                    <li>Applied keen eye for detail and consistency, skills essential for maintaining design systems
-                        and component libraries.</li>
-                    <li>Utilized Microsoft Excel/SAP to manage and structure critical data, developing the
-                        analytical mindset necessary for interpreting user metrics.</li>
-                </ul>
-            </div>
-        </section>
+                    <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-6">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-1">
+                            <h3 class="text-xl font-bold text-indigo-700 mb-2 md:mb-0">1. Ice Cream Parlour Website
+                                (PHP/MySQL Full-Stack)</h3>
 
-        <!-- 6. EDUCATION & CERTIFICATIONS -->
-        <section class="mb-6">
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Academic Background & Certifications</h2>
+                            <div class="code-btn-container mt-2 md:mt-0">
+                                <a href="https://github.com/divi-dj/my-project" target="_blank"
+                                    class="bg-blue-600 text-white text-sm font-semibold px-3 py-2 rounded-full shadow-md hover:bg-blue-700 transition">
+                                    Source Code↗
+                                </a>
+                                <div class="code-hover-box">
+                                    Source code for PHP/MySQL logic is available on GitHub.
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="space-y-4">
-                <!--SCHOOLING-->
-                <div class="flex justify-between items-start interactive-card p-2 rounded">
-                    <h3 class="text-lg font-bold text-gray-800">Class 12th</h3>
-                    <span class="text-sm font-semibold text-gray-600">2021 - 2022</span>
-                </div>
-                <p class="text-md text-gray-600 ml-2"> Kendriya vidyalaya | Total prcentage: 71%</p>
-                <!-- BCA -->
-                <div class="flex justify-between items-start interactive-card p-2 rounded">
-                    <h3 class="text-lg font-bold text-gray-800">Bachelors in Computer Application (BCA)</h3>
-                    <span class="text-sm font-semibold text-gray-600">2022 - 2025 (Graduated)</span>
-                </div>
-                <p class="text-md text-gray-600 ml-2">SSR College of Arts, Commerce and Science | Overall: 8.00 CGPA</p>
+                        <div class="visual-grid">
+                            <div class="visual-item" title="Customer Landing Page">
+                                <img src="ssflavor.png" alt="Ice Cream Wonderland Landing Page">
+                                <span class="visual-label">Landing & Flavors</span>
+                            </div>
+                            <div class="visual-item" title="Admin Dashboard">
+                                <img src="ssadmin.png" alt="Ice Cream Admin Dashboard">
+                                <span class="visual-label">Admin Dashboard</span>
+                            </div>
+                            <div class="visual-item" title="Order Form UI/UX">
+                                <img src="ssorder.png" alt="Ice Cream Order Form">
+                                <span class="visual-label">Order Form UI</span>
+                            </div>
+                        </div>
+                        <p class="text-md font-medium text-gray-700 mt-4">Focus:UI/UX Design, Order Flow
+                            Optimization, Responsive Design, Admin Dashboard (PHP & MySQL)</p>
 
-                <!-- Certifications -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                    <div class="p-3 rounded-lg bg-indigo-50 border-l-4 border-secondary-color text-gray-700">
-                        Data Analysis with IBM Skills Build (2025)
+                        <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600 text-sm">
+                            <li>Solution:Built a visually engaging website with login, order management, reviews,
+                                and a full admin panel powered by PHP & MySQL.</li>
+                            <li>Skills Showcased:User-centered design, MySQL database design, customer
+                                authentication, and overall full-stack development.</li>
+                        </ul>
                     </div>
-                    <div class="p-3 rounded-lg bg-indigo-50 border-l-4 border-secondary-color text-gray-700">
-                        Graphic Designing Course (Skill India, 2023-2024)
+
+                    <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-1">
+                            <h3 class="text-xl font-bold text-indigo-700 mb-2 md:mb-0">2. E-Commerce Inventory
+                                Performance Dashboard </h3>
+
+                            <a href="https://divi-dj.github.io/resume/inventory.html"
+                                class="bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-full shadow-md hover:bg-blue-700 transition">
+                                Live Prototype↗
+                            </a>
+                        </div>
+                        <p class="text-md font-medium text-gray-700">Focus: Data Visualization, Analytical UI,
+                            Information Design </p>
+                        <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600 text-sm">
+                            <li>Problem:Inventory managers need a single, easily digestible view of stock health
+                                and sales trends.</li>
+                            <li>Solution:Designed a dashboard UI prioritizing widget placement and data
+                                segmentation to convert complex analytics (Power BI knowledge) into usable visual UI.
+                            </li>
+                            <li>Skills Showcased:Data visualization via Chart.js, strict grid layout, and
+                                utilization of analytical background to define user needs.</li>
+                        </ul>
                     </div>
-                </div>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold section-title">Prior Experience & Training</h2>
+
+                    <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-xl font-bold text-indigo-700">Data Entry Trainee (Process Focus)</h3>
+                            <span class="text-sm font-semibold text-gray-600">Cortland (Current)</span>
+                        </div>
+                        <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600 text-sm">
+
+                            <li>Utilized Microsoft Excel/SAP to manage and structure critical data, developing the
+                                analytical mindset necessary for interpreting user metrics.</li>
+                        </ul>
+                    </div>
+
+                    <div class="interactive-card bg-white p-4 rounded-lg shadow-md mb-4">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-xl font-bold text-indigo-700">Graphic Design Portfolio Development</h3>
+                            <span class="text-sm font-semibold text-gray-600">2023 - 2024</span>
+                        </div>
+                        <p class="text-md font-medium text-gray-700">Course: Graphic Designing (Skill India)</p>
+                        <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600 text-sm">
+                            <li>Completed comprehensive training in visual composition, typography, and color theory,
+                                directly supporting UI aesthetics.</li>
+                            <li>Used Adobe Photoshop and Canva to create marketing materials, logos, and digital assets.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="interactive-card bg-white p-4 rounded-lg shadow-md">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="text-xl font-bold text-indigo-700">Web Design Project (Self-Initiated)</h3>
+                            <span class="text-sm font-semibold text-gray-600">Personal Project</span>
+                        </div>
+                        <ul class="list-disc list-outside ml-5 mt-2 space-y-1 text-gray-600 text-sm">
+                            <li>Developed fully functional websites using HTML, CSS, and basic JavaScript.</li>
+                            <li>Applied graphic design principles to ensure aesthetic consistency and visual hierarchy.
+                            </li>
+                        </ul>
+                    </div>
+                </section>
             </div>
-        </section>
 
-        <!-- 7. SOFT SKILLS -->
-        <section class="mb-6">
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Soft Skills</h2>
-            <div class="flex flex-wrap gap-3">
-                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Creative/Problem-Solving</span>
-                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Critical Thinking</span>
-                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Adaptability & Fast Learner</span>
-                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Project Management </span>
-                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Strong Communication</span>
+            <div class="space-y-8">
+
+                <section>
+                    <h2 class="text-2xl font-bold section-title">Foundational Design & Technical Skills</h2>
+
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">UI/UX, Visual
+                            Design & Prototyping</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Figma (Actively
+                                Learning UX Flows)</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Adobe Photoshop</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Canva (Digital Asset
+                                Creation)</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Graphic Design
+                                Principles</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2 border-b border-gray-200 pb-1">Technical
+                            Feasibility (Front-End & Data)</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">HTML & CSS (Web
+                                Creation)</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">SQL & RDBMS (Data
+                                Structure)</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Microsoft Excel
+                                (Advanced Analysis)/SAP</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Power BI / Data
+                                Analysis</span>
+                            <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Python / PHP</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold section-title">Academic Background & Certifications</h2>
+
+                    <div class="space-y-4">
+                        <div class="flex flex-wrap justify-between items-start interactive-card p-3 rounded bg-gray-50">
+                            <h3 class="text-lg font-bold text-gray-800">Bachelors in Computer Application (BCA)</h3>
+                            <span class="text-sm font-semibold text-gray-600">2022 - 2025 (Graduated) | SSR College
+                                (8.00 CGPA)</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div
+                                class="flex flex-wrap justify-between items-start interactive-card p-3 rounded bg-gray-50">
+                                <h3 class="text-lg font-bold text-gray-800">Class 12th</h3>
+                                <span class="text-sm font-semibold text-gray-600">2021 - 2022 | Kendriya vidyalaya
+                                    (71%)</span>
+                            </div>
+
+                            <div
+                                class="p-3 rounded-lg bg-indigo-50 border-l-4 border-secondary-color text-gray-700 text-sm font-medium">
+                                Data Analysis with IBM Skills Build (2025)
+                            </div>
+                            <div
+                                class="p-3 rounded-lg bg-indigo-50 border-l-4 border-secondary-color text-gray-700 text-sm font-medium">
+                                Graphic Designing Course (Skill India, 2023-2024)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2 class="text-2xl font-bold section-title">Soft Skills & Interests</h2>
+
+                    <div class="space-y-3">
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <h4 class="text-md font-semibold text-gray-800 mb-2">Soft Skills</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Creative/Problem-Solving</span>
+                                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Critical
+                                    Thinking</span>
+                                <span class="skill-chip px-3 py-1 text-sm font-semibold rounded-full">Adaptability &
+                                    Fast Learner</span>
+                            </div>
+                        </div>
+
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <h4 class="text-md font-semibold text-gray-800 mb-2">Languages & Hobbies</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="font-semibold px-3 py-1 bg-gray-200 rounded text-sm">English: Professional
+                                    Proficiency</span>
+                                <span class="font-semibold px-3 py-1 bg-gray-200 rounded text-sm">Hindi, Gujarati,
+                                    Marwadi: Native</span>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg">
+                            <h4 class="text-md font-semibold text-gray-800 mb-2">Languages & Hobbies</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="font-semibold px-3 py-1 bg-indigo-100 rounded text-sm">Sports</span>
+                                <span class="font-semibold px-3 py-1 bg-indigo-100 rounded text-sm">Dance</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
-
-        <!-- 8. LANGUAGES -->
-        <section>
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Languages</h2>
-            <div class="flex flex-wrap gap-4 text-gray-700">
-                <span class="font-semibold px-3 py-1 bg-gray-100 rounded">English: Professional Proficiency</span>
-                <span class="font-semibold px-3 py-1 bg-gray-100 rounded">Hindi, Gujarati, Marwadi: Native
-                    Proficiency</span>
-            </div>
-        </section>
-        <!-- 9. HOBBIES -->
-        <section>
-            <h2 class="text-2xl font-bold section-title pb-1 mb-4">Hobbies</h2>
-            <div class="flex flex-wrap gap-4 text-gray-700">
-                <span class="font-semibold px-3 py-1 bg-gray-100 rounded">Sports</span>
-                <span class="font-semibold px-3 py-1 bg-gray-100 rounded">Dance</span>
-            </div>
-        </section>
 
 
-
-    </main>
+        </main>
+    </div>
 </body>
 
 
 </html>
-
-
-
-
-
